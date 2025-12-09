@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const { autenticar } = require('../middleware/autenticacao');
+const { eFuncionario } = require('../middleware/autorizacao');
 const usuarioController = require('../controllers/usuarioController');
 
-// Lista todos os usuários
-router.get('/', usuarioController.getAllUsuarios);
-// Lista apenas clientes
-router.get('/clientes', usuarioController.getClientes);
-// Lista apenas funcionários
-router.get('/funcionarios', usuarioController.getFuncionarios);
+// Rotas de Gestão de Usuários 
+
+// Listar todos os usuários/clientes
+router.get('/', autenticar, eFuncionario, usuarioController.listarTodosUsuarios);
+
+// Buscar detalhes de um usuário específico pelo id
+router.get('/:id', autenticar, eFuncionario, usuarioController.buscarUsuarioPorId);
+
+// Atualizar um cliente específico pelo id
+router.put('/:id', autenticar, eFuncionario, usuarioController.atualizarUsuario); 
+
+// Deletar um cliente específico pelo id
+router.delete('/:id', autenticar, eFuncionario, usuarioController.deletarUsuario); 
+
+
 
 module.exports = router;
-
-const usuarioRouter = require('./routes/usuarioRoutes');
-app.use('/usuarios', usuarioRouter);
-
-app.get('/usuarios', (req, res) => {
-    res.send("Bem vindo a Loja EasyCar").status(200);
-    
-});
-
-app.get('/usuarios/funcionario', (req, res) => {
-});
