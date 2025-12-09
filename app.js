@@ -3,7 +3,6 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-const JWT = process.env.JWT_SECRET;
 
 // Servidor
 const PORT = process.env.PORT || 3000;
