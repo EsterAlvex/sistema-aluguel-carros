@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 // Importar Módulos de Rotas 
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const publicRoutes = require('./routes/publicRoutes');
+const locacaoRoutes = require('./routes/locacaoRoutes');
 
 app.use(express.json()); 
 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
     res.send("Bem vindo a API do sistema Drive Easy").status(200);
 });
 
+// ROTAS PROTEGIDAS: LOCAÇÃO
+app.use('/api/locacoes', locacaoRoutes);
 
 app.listen(PORT, () => {
      console.log(`Servidor rodando na porta ${PORT}`)
