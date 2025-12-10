@@ -14,7 +14,7 @@ const criarLocacao = async (req, res) => {
         if (!carro) {
             return res.status(404).json({ mensagem: "Carro não encontrado." });
         }
-        if (carro.status !== 'Disponivel') {
+        if (carro.status !== 'Disponível' && carro.status !== 'Disponivel') {
             return res.status(400).json({ mensagem: "Este carro não está disponível para locação." });
         }
 

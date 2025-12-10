@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 // ROTAS PROTEGIDAS: LOCAÇÃO
-app.use('/api/locacoes', locacaoRoutes);
+app.use('/locacoes', locacaoRoutes);
 
 app.listen(PORT, () => {
      console.log(`Servidor rodando na porta ${PORT}`)
