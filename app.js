@@ -15,6 +15,16 @@ app.get('/', (req, res) => {
 });
 
 //Usuarios e perfis
+app.post('/usuario/funcionario', async (req, res) => {
+    try {
+        const novoFuncionario = await Usuario.create(req.body);
+        res.status(201).json(novoFuncionario);
+    } catch (error) {
+        res.status(400).json({ mensagem: 'Erro ao cadastrar funcionário.', erro: error.message });
+    }
+});
+
+
 
 
 // Servidor
