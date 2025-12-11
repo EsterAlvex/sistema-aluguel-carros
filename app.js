@@ -7,12 +7,19 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+const { Usuario } = require('./models');
+const { Carro } = require('./models');
+const { Locacao } = require('./models');
+
 //Rota Principal
 app.get('/', (req, res) => {
     res.send("Bem vindo a Loja EasyCar").status(200);
 });
 
 //Usuarios e perfis
+
+// Rota para login de usuário (Funcionário)
+
 
 
 // Servidor
