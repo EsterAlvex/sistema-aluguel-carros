@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     marca: DataTypes.STRING,
     ano: DataTypes.INTEGER,
     placa: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    valor_diaria: DataTypes.DECIMAL(10, 2)
   }, {
     sequelize,
     modelName: 'Carro',
