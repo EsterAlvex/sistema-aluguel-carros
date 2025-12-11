@@ -5,12 +5,15 @@ const app = express();
 
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Rota de exemplo
+//Rota Principal
 app.get('/', (req, res) => {
-    res.send('Olá, mundo!');
+    res.send("Bem vindo a Loja EasyCar").status(200);
 });
+
+//Usuarios e perfis
+
 
 // Servidor
 app.listen(PORT, () => {
