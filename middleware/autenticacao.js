@@ -18,7 +18,7 @@ const autenticar = async (req, res, next) => {
         // Verifica a validade do token usando a chave secreta
         const payload = jwt.verify(token, process.env.JWT_SECRET);
         
-        // 1. Busca o usuário no banco pelo ID do token
+        // Busca o usuário no banco pelo ID do token
         const usuario = await models.Usuario.findByPk(payload.id, {
             // Seleciona apenas os atributos necessários para autorização e identificação
             attributes: ['id', 'nome', 'email', 'tipo'] 
@@ -28,7 +28,7 @@ const autenticar = async (req, res, next) => {
             return res.status(401).json({ mensagem: 'Usuário do token não encontrado no banco de dados.' });
         }
 
-        // 2. Anexa o objeto do usuário (com o tipo!) à requisição
+        // Anexa o objeto do usuário (com o tipo!) à requisição
         req.usuario = usuario; 
         
         next();
