@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     senha: DataTypes.STRING,
     telefone: DataTypes.STRING,
     endereco: DataTypes.STRING,
-    tipo: DataTypes.STRING
+    tipo: { 
+        type: DataTypes.ENUM('Cliente', 'Funcionario'), 
+        allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Usuario',
