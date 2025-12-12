@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 //Usuarios e perfis
 
 
+
 // Servidor
 app.listen(PORT, () => {
      console.log(`Servidor rodando na porta ${PORT}`)
