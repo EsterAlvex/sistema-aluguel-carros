@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 // Importar Módulos de Rotas 
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const publicRoutes = require('./routes/publicRoutes');
+const carroRoutes = require("./routes/carroRoutes");
 
 app.use(express.json()); 
 
@@ -16,6 +17,7 @@ app.use('/', publicRoutes);
 
 // ROTAS PROTEGIDAS: Lida com /api/usuarios, etc.
 app.use('/api/usuarios', usuarioRoutes);
+app.use("/", carroRoutes);
 
 // Rota Principal 
 app.get('/', (req, res) => {
