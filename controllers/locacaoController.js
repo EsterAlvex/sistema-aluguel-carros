@@ -144,16 +144,58 @@ const atualizarLocacao = async (req, res) => {
     const dadosAtualizados = req.body;
 
     try {
-        const [linhasAfetadas] = await models.Locacao.update(dadosAtualizados, {
-            where: { id }
-        });
+        // 1. Buscar a locação existente primeiro para ter os dados atuais
+        const locacao = await models.Locacao.findByPk(id);
 
-        if (linhasAfetadas === 0) {
+        if (!locacao) {
             return res.status(404).json({ mensagem: "Locação não encontrada." });
         }
 
-        res.status(200).json({ mensagem: "Locação atualizada com sucesso." });
+        // 2. Verificar se há alteração nas datas para recalcular o valor
+        if (dadosAtualizados.data_inicio || dadosAtualizados.data_fim) {
+            
+            // Pega a nova data ou mantém a antiga se não foi enviada
+            const inicio = moment(dadosAtualizados.data_inicio || locacao.data_inicio, "YYYY-MM-DD");
+            const fim = moment(dadosAtualizados.data_fim || locacao.data_fim, "YYYY-MM-DD");
+
+            // Validações de data
+            if (!inicio.isValid() || !fim.isValid()) {
+                return res.status(400).json({ mensagem: "Datas inválidas." });
+            }
+            if (fim.isBefore(inicio)) {
+                return res.status(400).json({ mensagem: "A data de fim deve ser depois ou igual à data de início." });
+            }
+
+            // Calcular dias
+            let diasAluguel = fim.diff(inicio, 'days');
+            if (diasAluguel <= 0) diasAluguel = 1;
+
+            // 3. Buscar o carro para saber o valor da diária atual
+            // Se o usuário também estiver trocando de carro, usamos o novo ID, senão usamos o da locação
+            const carroId = dadosAtualizados.carro_id || locacao.carro_id;
+            const carro = await models.Carro.findByPk(carroId);
+
+            if (!carro) {
+                return res.status(404).json({ mensagem: "Carro vinculado não encontrado para recalculo." });
+            }
+
+            // 4. Recalcular o valor total e inserir no objeto de atualização
+            const novoValorTotal = diasAluguel * parseFloat(carro.valor_diaria);
+            dadosAtualizados.valor = novoValorTotal;
+            
+            console.log(`Recálculo efetuado: ${diasAluguel} dias * R$${carro.valor_diaria} = R$${novoValorTotal}`);
+        }
+
+        // 5. Atualizar a locação
+        await locacao.update(dadosAtualizados);
+
+        res.status(200).json({ 
+            mensagem: "Locação atualizada com sucesso.", 
+            locacao: await locacao.reload() // Recarrega para mostrar os dados atualizados no response
+        });
+
     } catch (error) {
+        console.error(error);
         res.status(500).json({ mensagem: "Erro ao atualizar locação.", erro: error.message });
     }
 };
