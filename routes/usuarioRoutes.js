@@ -1,15 +1,23 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const usuarioController = require("../controllers/usuarioController");
+const { autenticar } = require('../middleware/autenticacao');
+const { eFuncionario } = require('../middleware/autorizacao');
+const usuarioController = require('../controllers/usuarioController');
 
-// CRUD
-router.post("/", usuarioController.create);
-router.get("/", usuarioController.list);
-router.get("/:id", usuarioController.findOne);
-router.put("/:id", usuarioController.update);
-router.delete("/:id", usuarioController.delete);
+// Rotas de Gestão de Usuários 
 
-// login separado
-//router.post("/login", usuarioController.login);
+// Listar todos os usuários/clientes
+router.get('/', autenticar, eFuncionario, usuarioController.listarTodosUsuarios);
+
+// Buscar detalhes de um usuário específico pelo id
+router.get('/:id', autenticar, eFuncionario, usuarioController.buscarUsuarioPorId);
+
+// Atualizar um cliente específico pelo id
+router.put('/:id', autenticar, eFuncionario, usuarioController.atualizarUsuario); 
+
+// Deletar um cliente específico pelo id
+router.delete('/:id', autenticar, eFuncionario, usuarioController.deletarUsuario); 
+
+
 
 module.exports = router;
