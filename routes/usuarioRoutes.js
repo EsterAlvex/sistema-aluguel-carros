@@ -18,6 +18,4 @@ router.put('/:id', autenticar, eFuncionario, usuarioController.atualizarUsuario)
 // Deletar um cliente específico pelo id
 router.delete('/:id', autenticar, eFuncionario, usuarioController.deletarUsuario); 
 
-
-
 module.exports = router;

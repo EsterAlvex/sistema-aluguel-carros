@@ -15,8 +15,14 @@ app.use(express.json());
 // ROTAS PÚBLICAS: Lida com /login e /cadastro
 app.use('/', publicRoutes); 
 
+// ROTAS PROTEGIDAS
+app.use('/listar/usuarios', usuarioRoutes);
+app.use('/buscar', usuarioRoutes);
+app.use('/atualizar', usuarioRoutes);
+app.use('/deletar', usuarioRoutes);
+
 // ROTAS PROTEGIDAS: Lida com /api/usuarios, etc.
-app.use('/api/usuarios', usuarioRoutes);
+
 app.use("/", carroRoutes);
 
 // Rota Principal 
