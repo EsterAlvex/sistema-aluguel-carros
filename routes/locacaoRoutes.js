@@ -7,7 +7,7 @@ const { autenticar } = require('../middleware/autenticacao');
 const { eFuncionario } = require('../middleware/autorizacao');
 
 // Rotas simplificadas (o prefixo '/locacoes' virá do app.js)
-router.get('/consultar', autenticar, locacaoController.listarMinhasLocacoes);
+router.get('/consultar', autenticar, locacaoController.consultarLocacoesCliente);
 
 // CRIAR (POST /locacoes)
 router.post('/', autenticar, eFuncionario, locacaoController.criarLocacao);

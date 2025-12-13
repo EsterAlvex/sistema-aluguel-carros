@@ -91,7 +91,7 @@ const listarLocacoes = async (req, res) => {
     }
 };
 
-const listarMinhasLocacoes = async (req, res) => {
+const consultarLocacoesCliente = async (req, res) => {
     const cliente_id = req.usuario.id; 
 
     try {
@@ -228,7 +228,7 @@ const deletarLocacao = async (req, res) => {
 module.exports = {
     criarLocacao,
     listarLocacoes,
-    listarMinhasLocacoes,
+    consultarLocacoesCliente,
     buscarLocacaoPorId,
     atualizarLocacao,
     deletarLocacao
