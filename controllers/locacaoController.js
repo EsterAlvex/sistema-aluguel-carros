@@ -1,11 +1,12 @@
 const models = require('../models');
+const moment = require('moment');
 
-// Criar uma nova locação
+// Criar uma nova locação com cálculo automático do valor baseado na diária do carro
 // Apenas funcionários podem registrar locações
 const criarLocacao = async (req, res) => {
-    const { cliente_id, carro_id, data_inicio, data_fim, valor } = req.body;
+    const { cliente_id, carro_id, data_inicio, data_fim } = req.body; // Não recebe valor diretamente
     
-    // O ID do funcionário vem do token de autenticação (req.usuario)
+    // O ID do funcionário vem do token de autenticação (req.usuario definido no middleware de autenticação)
     const funcionario_id = req.usuario.id; 
 
     try {
@@ -14,7 +15,7 @@ const criarLocacao = async (req, res) => {
         if (!carro) {
             return res.status(404).json({ mensagem: "Carro não encontrado." });
         }
-        if (carro.status !== 'Disponivel') {
+        if (carro.status !== 'Disponível' && carro.status !== 'Disponivel') {
             return res.status(400).json({ mensagem: "Este carro não está disponível para locação." });
         }
 
@@ -24,21 +25,45 @@ const criarLocacao = async (req, res) => {
             return res.status(400).json({ mensagem: "Cliente inválido ou não encontrado." });
         }
 
-        // 3. Criar a Locação
+        // 3. CALCULAR O VALOR AUTOMATICAMENTE
+        // Converter strings para datas do moment
+        const inicio = moment(data_inicio, "YYYY-MM-DD");
+        const fim = moment(data_fim, "YYYY-MM-DD");
+
+        // Validação básica de datas
+        if (!inicio.isValid() || !fim.isValid()) {
+            return res.status(400).json({ mensagem: "Datas inválidas." });
+        }
+        if (fim.isSameOrBefore(inicio)) {
+            return res.status(400).json({ mensagem: "A data de fim deve ser depois da data de início." });
+        }
+
+        // Calcular a diferença em dias
+        const diasAluguel = fim.diff(inicio, 'days');
+        
+        // Calcular o valor total (Dias * Valor da Diária do Carro)
+        const valorTotal = diasAluguel * parseFloat(carro.valor_diaria);
+
+        // 4. Criar a Locação
         const novaLocacao = await models.Locacao.create({
             cliente_id,
             carro_id,
-            funcionario_id,
+            funcionario_id, // Pode ser null se não tiver logado, mas idealmente é obrigatório
             data_inicio,
             data_fim,
-            valor
+            valor: valorTotal // Valor calculado inserido aqui
         });
 
-        // 4. Atualizar status do Carro para 'Alugado'
+        // 5. Atualizar status do Carro para 'Alugado'
         await carro.update({ status: 'Alugado' });
 
         res.status(201).json({
             mensagem: "Locação registrada com sucesso.",
+            calculo: {
+                dias: diasAluguel,
+                diaria: carro.valor_diaria,
+                total: valorTotal
+            },
             locacao: novaLocacao
         });
 
@@ -53,21 +78,9 @@ const listarLocacoes = async (req, res) => {
     try {
         const locacoes = await models.Locacao.findAll({
             include: [
-                { 
-                    model: models.Carro, 
-                    as: 'carro', 
-                    attributes: ['modelo', 'placa', 'marca'] 
-                },
-                { 
-                    model: models.Usuario, 
-                    as: 'cliente', 
-                    attributes: ['nome', 'email', 'cnh'] 
-                },
-                { 
-                    model: models.Usuario, 
-                    as: 'funcionario', 
-                    attributes: ['nome'] 
-                }
+                { model: models.Carro, as: 'carro', attributes: ['modelo', 'placa', 'valor_diaria'] },
+                { model: models.Usuario, as: 'cliente', attributes: ['nome', 'email'] },
+                { model: models.Usuario, as: 'funcionario', attributes: ['nome'] }
             ],
             order: [['createdAt', 'DESC']]
         });
@@ -84,8 +97,8 @@ const buscarLocacaoPorId = async (req, res) => {
         const locacao = await models.Locacao.findByPk(id, {
             include: [
                 { model: models.Carro, as: 'carro' },
-                { model: models.Usuario, as: 'cliente', attributes: ['nome'] },
-                { model: models.Usuario, as: 'funcionario', attributes: ['nome'] }
+                { model: models.Usuario, as: 'cliente' },
+                { model: models.Usuario, as: 'funcionario' }
             ]
         });
 
@@ -99,10 +112,10 @@ const buscarLocacaoPorId = async (req, res) => {
     }
 };
 
-// Atualizar Locação (ex: estender data ou mudar valor)
+// Atualizar Locação
 const atualizarLocacao = async (req, res) => {
     const { id } = req.params;
-    const dadosAtualizados = req.body;
+    const dadosAtualizados = req.body; // Cuidado: se atualizar datas, o valor não recalcula automaticamente aqui sem lógica extra.
 
     try {
         const [linhasAfetadas] = await models.Locacao.update(dadosAtualizados, {
@@ -119,7 +132,7 @@ const atualizarLocacao = async (req, res) => {
     }
 };
 
-// Deletar Locação (Cancelamento)
+// Deletar Locação
 const deletarLocacao = async (req, res) => {
     const { id } = req.params;
     try {
@@ -129,7 +142,7 @@ const deletarLocacao = async (req, res) => {
             return res.status(404).json({ mensagem: "Locação não encontrada." });
         }
 
-        // Antes de deletar, libera o carro novamente para 'Disponivel'
+        // Libera o carro
         const carro = await models.Carro.findByPk(locacao.carro_id);
         if (carro) {
             await carro.update({ status: 'Disponivel' });
@@ -143,7 +156,7 @@ const deletarLocacao = async (req, res) => {
     }
 };
 
-// Exportando
+// Exportar as funções do controlador
 module.exports = {
     criarLocacao,
     listarLocacoes,
