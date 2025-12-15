@@ -91,6 +91,31 @@ const listarLocacoes = async (req, res) => {
     }
 };
 
+const listarMinhasLocacoes = async (req, res) => {
+    const cliente_id = req.usuario.id; 
+
+    try {
+        const locacoes = await models.Locacao.findAll({
+            where: { cliente_id }, // Filtra apenas pelas locações desse ID
+            include: [
+                { model: models.Carro, as: 'carro', attributes: ['modelo', 'placa', 'valor_diaria'] },
+                { model: models.Usuario, as: 'funcionario', attributes: ['nome'] }
+            ],
+            order: [['createdAt', 'DESC']]
+        });
+        
+        if (locacoes.length === 0) {
+             return res.status(404).json({ mensagem: "Nenhuma locação encontrada para este cliente." });
+        }
+
+        res.status(200).json(locacoes);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: "Erro ao buscar suas locações.", erro: error.message });
+    }
+};
+
 // Buscar locação por ID
 const buscarLocacaoPorId = async (req, res) => {
     const { id } = req.params;
@@ -161,6 +186,7 @@ const deletarLocacao = async (req, res) => {
 module.exports = {
     criarLocacao,
     listarLocacoes,
+    listarMinhasLocacoes,
     buscarLocacaoPorId,
     atualizarLocacao,
     deletarLocacao
