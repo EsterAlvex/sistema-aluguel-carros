@@ -4,10 +4,10 @@ const moment = require('moment');
 // Criar uma nova locação com cálculo automático do valor baseado na diária do carro
 // Apenas funcionários podem registrar locações
 const criarLocacao = async (req, res) => {
-    const { cliente_id, carro_id, data_inicio, data_fim } = req.body; // Não recebe valor diretamente
+    const { cliente_id, carro_id, data_inicio, data_fim } = req.body; 
     
-    // O ID do funcionário vem do token de autenticação (req.usuario definido no middleware de autenticação)
-    const funcionario_id = req.usuario.id; 
+    // O ID do funcionário vem do token de autenticação (req.usuario definido no middleware)
+    const funcionario_id = req.usuario.id;
 
     try {
         // 1. Verificar se o Carro existe e está disponível
@@ -26,21 +26,22 @@ const criarLocacao = async (req, res) => {
         }
 
         // 3. CALCULAR O VALOR AUTOMATICAMENTE
-        // Converter strings para datas do moment
+        // Exportar as funções do controlador
         const inicio = moment(data_inicio, "YYYY-MM-DD");
         const fim = moment(data_fim, "YYYY-MM-DD");
 
-        // Validação básica de datas
+        // Validação de datas
         if (!inicio.isValid() || !fim.isValid()) {
             return res.status(400).json({ mensagem: "Datas inválidas." });
         }
-        if (fim.isSameOrBefore(inicio)) {
-            return res.status(400).json({ mensagem: "A data de fim deve ser depois da data de início." });
+        if (fim.isBefore(inicio)) {
+            return res.status(400).json({ mensagem: "A data de fim deve ser depois ou igual à data de início." });
         }
 
-        // Calcular a diferença em dias
-        const diasAluguel = fim.diff(inicio, 'days');
-        
+        // Calcular a diferença em dias (garantindo pelo menos 1 diária)
+        let diasAluguel = fim.diff(inicio, 'days');
+        if (diasAluguel <= 0) diasAluguel = 1; 
+
         // Calcular o valor total (Dias * Valor da Diária do Carro)
         const valorTotal = diasAluguel * parseFloat(carro.valor_diaria);
 
@@ -48,10 +49,10 @@ const criarLocacao = async (req, res) => {
         const novaLocacao = await models.Locacao.create({
             cliente_id,
             carro_id,
-            funcionario_id, // Pode ser null se não tiver logado, mas idealmente é obrigatório
+            funcionario_id,
             data_inicio,
             data_fim,
-            valor: valorTotal // Valor calculado inserido aqui
+            valor: valorTotal
         });
 
         // 5. Atualizar status do Carro para 'Alugado'
@@ -73,7 +74,7 @@ const criarLocacao = async (req, res) => {
     }
 };
 
-// Listar todas as locações
+// Listar todas as locações com detalhes associados
 const listarLocacoes = async (req, res) => {
     try {
         const locacoes = await models.Locacao.findAll({
@@ -115,7 +116,7 @@ const buscarLocacaoPorId = async (req, res) => {
 // Atualizar Locação
 const atualizarLocacao = async (req, res) => {
     const { id } = req.params;
-    const dadosAtualizados = req.body; // Cuidado: se atualizar datas, o valor não recalcula automaticamente aqui sem lógica extra.
+    const dadosAtualizados = req.body;
 
     try {
         const [linhasAfetadas] = await models.Locacao.update(dadosAtualizados, {
@@ -132,7 +133,7 @@ const atualizarLocacao = async (req, res) => {
     }
 };
 
-// Deletar Locação
+// Deletar Locação e liberar o veículo
 const deletarLocacao = async (req, res) => {
     const { id } = req.params;
     try {
@@ -142,7 +143,7 @@ const deletarLocacao = async (req, res) => {
             return res.status(404).json({ mensagem: "Locação não encontrada." });
         }
 
-        // Libera o carro
+        // Libera o carro alterando o status para 'Disponivel'
         const carro = await models.Carro.findByPk(locacao.carro_id);
         if (carro) {
             await carro.update({ status: 'Disponivel' });
@@ -150,7 +151,7 @@ const deletarLocacao = async (req, res) => {
 
         await locacao.destroy();
 
-        return res.status(200).json({ mensagem: "Locação cancelada e excluída com sucesso." });
+        return res.status(200).json({ mensagem: "Locação cancelada e veículo liberado com sucesso." });
     } catch (error) {
         return res.status(500).json({ mensagem: "Erro ao deletar locação.", erro: error.message });
     }
