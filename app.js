@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 3000;
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const publicRoutes = require('./routes/publicRoutes');
 const carroRoutes = require("./routes/carroRoutes");
-
 const locacaoRoutes = require('./routes/locacaoRoutes');
 
 app.use(express.json()); 
@@ -17,23 +16,22 @@ app.use(express.json());
 // ROTAS PÚBLICAS: Lida com /login e /cadastro
 app.use('/', publicRoutes); 
 
-// ROTAS PROTEGIDAS
+// ROTAS PROTEGIDAS: Usuários
 app.use('/listar/usuarios', usuarioRoutes);
 app.use('/buscar', usuarioRoutes);
 app.use('/atualizar', usuarioRoutes);
 app.use('/deletar', usuarioRoutes);
 
-// ROTAS PROTEGIDAS: Lida com /api/usuarios, etc.
+// ROTAS PROTEGIDAS: Carros
+app.use('/carros', carroRoutes);
 
-app.use("/", carroRoutes);
+// ROTAS PROTEGIDAS: LOCAÇÃO
+app.use('/locacoes', locacaoRoutes);
 
 // Rota Principal 
 app.get('/', (req, res) => {
     res.send("Bem vindo a API do sistema Drive Easy").status(200);
 });
-
-// ROTAS PROTEGIDAS: LOCAÇÃO
-app.use('/locacoes', locacaoRoutes);
 
 app.listen(PORT, () => {
      console.log(`Servidor rodando na porta ${PORT}`)
