@@ -1,10 +1,15 @@
-const Carro = require("../models/carro");
+const models = require("../models");
+const Carro = models.Carro;
 
 module.exports = {
     
     // Criação do carro
     async criar(req, res) {
         try {
+            const tipoUsuario = req.usuario.tipo;
+            if (tipoUsuario !== 'Funcionario') {
+                return res.status(403).json({ mensagem: "Apenas funcionários podem cadastrar carros." });
+            }
             const novoCarro = await Carro.create(req.body);
             return res.status(201).json(novoCarro);
         } catch (error) {
