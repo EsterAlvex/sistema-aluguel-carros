@@ -13,19 +13,19 @@ const locacaoRoutes = require('./routes/locacaoRoutes');
 
 app.use(express.json()); 
 
-// ROTAS PÚBLICAS: Lida com /login e /cadastro
+// Rotas Públicas: Lida com /login e /cadastro
 app.use('/', publicRoutes); 
 
-// ROTAS PROTEGIDAS: Usuários
+// Rotas Protegidas de Usuários
 app.use('/listar/usuarios', usuarioRoutes);
 app.use('/buscar', usuarioRoutes);
 app.use('/atualizar', usuarioRoutes);
 app.use('/deletar', usuarioRoutes);
 
-// ROTAS PROTEGIDAS: Carros
+// Rotas Protegidas de Carros
 app.use('/carros', carroRoutes);
 
-// ROTAS PROTEGIDAS: LOCAÇÃO
+// Rotas Protegidas de locações
 app.use('/locacoes', locacaoRoutes);
 
 // Rota Principal 
