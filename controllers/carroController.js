@@ -10,7 +10,7 @@ module.exports = {
             if (tipoUsuario !== 'Funcionario') {
                 return res.status(403).json({ mensagem: "Apenas funcionários podem cadastrar carros." });
             }
-            const novoCarro = await Carro.create(req.body);
+            const novoCarro = await models.Carro(req.body);
             return res.status(201).json(novoCarro);
         } catch (error) {
             return res.status(400).json({ mensagem: "Erro ao cadastrar carro", error: error.message });
@@ -20,7 +20,7 @@ module.exports = {
     // Listar todos
     async listarTodos(req, res) {
         try {
-            const carros = await Carro.findAll();
+            const carros = await models.Carro.findAll();
             return res.status(200).json(carros);
         } catch (error) {
             return res.status(500).json({ mensagem: "Erro ao buscar carros." });
@@ -30,7 +30,7 @@ module.exports = {
     // Listar por ID
     async listarPorId(req, res) {
         try {
-            const carro = await Carro.findByPk(req.params.id);
+            const carro = await models.Carro.findByPk(req.params.id);
             if (!carro) {
                 return res.status(404).json({ mensagem: "Carro não encontrado." });
             }
@@ -43,7 +43,7 @@ module.exports = {
     // Atualizar
     async atualizar(req, res) {
         try {
-            const carro = await Carro.findByPk(req.params.id);
+            const carro = await models.Carro.findByPk(req.params.id);
             if (!carro) {
                 return res.status(404).json({ mensagem: "Carro não encontrado." });
             }
@@ -58,7 +58,7 @@ module.exports = {
     // Deletar
     async deletar(req, res) {
         try {
-            const carro = await Carro.findByPk(req.params.id);
+            const carro = await models.Carro.findByPk(req.params.id);
             if (!carro) {
                 return res.status(404).json({ mensagem: "Carro não encontrado." });
             }
