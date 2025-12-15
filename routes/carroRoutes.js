@@ -5,12 +5,12 @@ const { autenticar } = require('../middleware/autenticacao');
 const {eFuncionario} = require('../middleware/autorizacao');
 
 // Rotas públicas
-router.post("/carros", carroController.criar);
+router.post("/", autenticar, eFuncionario, carroController.criar);
 
 // Rotas privadas
-router.get("/carros", autenticar, eFuncionario, carroController.listarTodos);
-router.get("/carros/:id", autenticar, eFuncionario, carroController.listarPorId);
-router.put("/carros/:id", autenticar, eFuncionario, carroController.atualizar);
-router.delete("/carros/:id", autenticar, eFuncionario, carroController.deletar);
+router.get("/", autenticar, eFuncionario, carroController.listarTodos);
+router.get("/:id", autenticar, eFuncionario, carroController.listarPorId);
+router.put("/:id", autenticar, eFuncionario, carroController.atualizar);
+router.delete("/:id", autenticar, eFuncionario, carroController.deletar);
 
 module.exports = router;
