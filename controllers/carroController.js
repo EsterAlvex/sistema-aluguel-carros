@@ -3,7 +3,6 @@ const Carro = models.Carro;
 
 module.exports = {
     
-    // Criação do carro
     async criar(req, res) {
         try {
             if (!req.usuario) {
@@ -15,13 +14,17 @@ module.exports = {
                 return res.status(403).json({ mensagem: "Apenas funcionários podem cadastrar carros." });
             }
             const novoCarro = await Carro.create(req.body);
-            return res.status(201).json(novoCarro);
+            return res.status(200).json({ 
+                mensagem: "Carro cadastrado com sucesso!", 
+                carro: novoCarro
+            });
+
         } catch (error) {
             return res.status(400).json({ mensagem: "Erro ao cadastrar carro", error: error.message });
         }
     },
 
-    // Listar todos
+   
     async listarTodos(req, res) {
         try {
             const carros = await Carro.findAll();
@@ -31,7 +34,7 @@ module.exports = {
         }
     },
 
-    // Listar por ID
+    
     async listarPorId(req, res) {
         try {
             const carro = await Carro.findByPk(req.params.id);
@@ -44,7 +47,7 @@ module.exports = {
         }
     },
 
-    // Atualizar
+    
     async atualizar(req, res) {
         try {
             const carro = await Carro.findByPk(req.params.id);
@@ -55,7 +58,7 @@ module.exports = {
             await carro.update(req.body);
             
             return res.status(200).json({ 
-                mensagem: "Carro atualizado com sucesso", 
+                mensagem: "Carro atualizado com sucesso!", 
                 carro: carro 
             });
             return res.status(200).json(carro);
@@ -64,7 +67,7 @@ module.exports = {
         }
     },
 
-    // Deletar
+    
     async deletar(req, res) {
         try {
             const carro = await Carro.findByPk(req.params.id);
@@ -75,7 +78,8 @@ module.exports = {
             await carro.destroy();
 
             return res.status(200).json({ 
-                mensagem: "Carro deletado com sucesso" 
+                mensagem: "Carro deletado com sucesso!",
+                carro: carro
             });
             return res.status(204).send();
         } catch (error) {
