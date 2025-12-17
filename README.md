@@ -1,4 +1,4 @@
-# API Drive Easy: Sistema de Gestão de Locação de Carros (Node.js/Express)
+# API Drive Easy: Sistema de Gerenciamento Inteligente para Locadoras de Veículos (Node.js/Express)
 
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%2B-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-5.x-blue.svg?logo=express)](https://expressjs.com/)
@@ -9,11 +9,10 @@
 
 ## Instituições de Fomento e Parceria
 
-
 [![Website IFB](https://img.shields.io/badge/Website-IFB-%23508C3C.svg?labelColor=%23C8102E)](https://www.ifb.edu.br/) 
 [![Website ihwbr](https://img.shields.io/badge/Website-ihwbr-%23DAA520.svg?labelColor=%232E2E2E)](https://hardware.org.br/)
 
-## Orientador (link para o perfil do orientador)
+## Orientador 
 [![LinkedIn Tiago Segato](https://img.shields.io/badge/LinkedIn-Tiago_Segato-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://www.linkedin.com/in/tiagosegato/)
 [![GitHub Tiago segato](https://img.shields.io/badge/GitHub-tiagosegato_(Tiago_Segato)-%23181717.svg?logo=github&logoColor=white)](https://github.com/tiagosegato)
 [![Lattes Tiago Segato](https://img.shields.io/badge/Lattes-Tiago_Segato-green.svg?logo=cnpq&logoColor=white)](http://lattes.cnpq.br/3802976697073676)
@@ -27,6 +26,7 @@
 - [Pacotes Utilizados](#pacotes-utilizados)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Diagrama de Banco de Dados](#diagrama-de-banco-de-dados)
+- [Diagrama de Arquitetura do Sistema](#diagrama-de-arquitetura-do-sistema)
 - [Documentação da API](#documentação-da-api)
 - [Configuração do Ambiente](#configuração-do-ambiente)
 ---
@@ -126,7 +126,23 @@ sistema-aluguel-carros/
     * **Cliente** (1:N): Identifica o locatário que realizou o aluguel.
     * **Campos Críticos**: As datas de `inicio`/`fim` e o `valor` total calculado são os dados vitais desta entidade.
 ---
+## Diagrama de Arquitetura do Sistema 
+```mermaid
+flowchart TD
+    A[Cliente] -->|HTTP| B
 
+    subgraph B[API REST Node.js Express]
+        C[Rotas]
+        D[Middlewares]
+        E[Controllers]
+        F[Models Sequelize]
+        C --> D --> E --> F
+    end
+
+    F --> G[(PostgreSQL)]
+    E -->|JSON| A
+```
+---
 ## Documentação da API
 
 A API utiliza o formato JSON para envio e recebimento de dados. Rotas protegidas exigem o envio do Token JWT no cabeçalho `Authorization` como `Bearer [token]`.
