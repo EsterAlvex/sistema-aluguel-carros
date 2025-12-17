@@ -97,7 +97,7 @@ sistema-aluguel-carros/
 │   └── (...)
 ├── routes/
 │   ├── carroRoutes.js
-│   ├── locacaoRoutesr.js
+│   ├── locacaoRoutes.js
 │   ├── publicRoutes.js
 │   └── usuarioRoutes.js
 ├── seeders/
