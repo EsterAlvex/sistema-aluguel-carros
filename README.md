@@ -29,8 +29,6 @@
 - [Diagrama de Banco de Dados](#diagrama-de-banco-de-dados)
 - [Documentação da API](#documentação-da-api)
 - [Configuração do Ambiente](#configuração-do-ambiente)
-- [Deploy (Opcional)](#deploy-opcional)
-
 ---
 
 ## Visão Geral
@@ -232,4 +230,3 @@ Siga os passos abaixo para configurar o ambiente local.
    npm start
    ```
 ---
-
