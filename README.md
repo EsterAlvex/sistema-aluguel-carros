@@ -83,7 +83,7 @@ sistema-aluguel-carros/
 ├── middleware/
 │   ├── autenticacao.js
 │   └── autorizacao.js
-├── migratios/
+├── migrations/
 │   ├── 20251210204431-create-usuario.js
 │   ├── 20251210205000-create-carro.js
 │   ├── 20251210210149-create-locacao.js
