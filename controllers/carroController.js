@@ -61,7 +61,7 @@ module.exports = {
                 mensagem: "Carro atualizado com sucesso!", 
                 carro: carro 
             });
-            return res.status(200).json(carro);
+    
         } catch (error) {
             return res.status(400).json({ mensagem: "Erro ao atualizar carro.", erro: error.message });
         }
@@ -81,7 +81,7 @@ module.exports = {
                 mensagem: "Carro deletado com sucesso!",
                 carro: carro
             });
-            return res.status(204).send();
+            
         } catch (error) {
             return res.status(500).json({ mensagem: "Erro ao deletar carro." });
         }
