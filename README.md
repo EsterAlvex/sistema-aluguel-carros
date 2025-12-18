@@ -209,8 +209,8 @@ Siga os passos abaixo para configurar o ambiente local.
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/usuario/projeto_api.git
-   cd nomeDaSuaPasta
+   git clone https://github.com/EsterAlvex/sistema-aluguel-carros.git
+   cd sistema-aluguel-carros
    ```
 
 2. **Instale as dependências:**
