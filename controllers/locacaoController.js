@@ -91,6 +91,7 @@ const listarLocacoes = async (req, res) => {
     }
 };
 
+// Consultar locações de um cliente específico a partir do token
 const consultarLocacoesCliente = async (req, res) => {
     const cliente_id = req.usuario.id; 
 
