@@ -24,7 +24,7 @@
 [![LinkedIn Isabela_Marques](https://img.shields.io/badge/LinkedIn-Isabela_Marques-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://br.linkedin.com/in/isabela-marques-725a92332)
 [![GitHub Isabela Marques](https://img.shields.io/badge/GitHub-isabelamarquess_(Isabela_Marques)-%23181717.svg?logo=github&logoColor=white)](https://github.com/isabelamarquess)
 
-[![LinkedIn Jhiovana Silva](https://img.shields.io/badge/LinkedIn-Jhiovana_Silva-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](www.linkedin.com/in/jhiovanasilva)
+[![LinkedIn Jhiovana Silva](https://img.shields.io/badge/LinkedIn-Jhiovana_Silva-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://www.linkedin.com/in/jhiovanasilva/)
 [![GitHub Jhiovana Silva](https://img.shields.io/badge/GitHub-jhsribeiro_(Jhiovana_Silva)-%23181717.svg?logo=github&logoColor=white)](https://github.com/jhsribeiro)
 
 [![LinkedIn Thalita Soares](https://img.shields.io/badge/LinkedIn-Thalita_Soares-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://www.linkedin.com/in/thalita-soares-9982b82ba/)
