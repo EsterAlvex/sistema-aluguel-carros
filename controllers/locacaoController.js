@@ -16,7 +16,7 @@ const criarLocacao = async (req, res) => {
             return res.status(404).json({ mensagem: "Carro não encontrado." });
         }
         if (carro.status !== 'Disponível' && carro.status !== 'Disponivel') {
-            return res.status(400).json({ mensagem: "Este carro não está disponível para locação." });
+            return res.status(400).json({ mensagem: "Este carro não está disponível para locação.", status_carro: carro.status });
         }
 
         // 2. Verificar se o Cliente existe
@@ -91,6 +91,7 @@ const listarLocacoes = async (req, res) => {
     }
 };
 
+// Consultar locações de um cliente específico a partir do token
 const consultarLocacoesCliente = async (req, res) => {
     const cliente_id = req.usuario.id; 
 

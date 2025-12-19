@@ -10,7 +10,7 @@ module.exports = {
         modelo: 'Cronos',
         placa: 'ABC1A23',
         ano: 2022,
-        status: 'disponivel', 
+        status: 'Disponivel', 
         valor_diaria: 120.00, 
         createdAt: new Date(),
         updatedAt: new Date()
@@ -20,7 +20,7 @@ module.exports = {
         modelo: 'Onix Plus',
         placa: 'XYZ9B87',
         ano: 2023,
-        status: 'disponivel',
+        status: 'Disponivel',
         valor_diaria: 150.50,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -30,7 +30,7 @@ module.exports = {
         modelo: 'T-Cross',
         placa: 'DEF4C56',
         ano: 2024,
-        status: 'indisponivel', 
+        status: 'Indisponivel', 
         valor_diaria: 250.90,
         createdAt: new Date(),
         updatedAt: new Date()
