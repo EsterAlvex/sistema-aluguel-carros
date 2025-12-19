@@ -1,4 +1,4 @@
-# API Drive Easy: Sistema de Gerenciamento Inteligente para Locadoras de Veículos (Node.js/Express)
+# API Drive Easy: Sistema de Gerenciamento Inteligente para Locadoras de Veículos 
 
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%2B-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-5.x-blue.svg?logo=express)](https://expressjs.com/)
@@ -16,6 +16,21 @@
 [![LinkedIn Tiago Segato](https://img.shields.io/badge/LinkedIn-Tiago_Segato-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://www.linkedin.com/in/tiagosegato/)
 [![GitHub Tiago segato](https://img.shields.io/badge/GitHub-tiagosegato_(Tiago_Segato)-%23181717.svg?logo=github&logoColor=white)](https://github.com/tiagosegato)
 [![Lattes Tiago Segato](https://img.shields.io/badge/Lattes-Tiago_Segato-green.svg?logo=cnpq&logoColor=white)](http://lattes.cnpq.br/3802976697073676)
+
+## Desenvolvedoras 
+[![LinkedIn Ester Alves](https://img.shields.io/badge/LinkedIn-Ester_Alves-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://www.linkedin.com/in/ester-alves-gomes/)
+[![GitHub Ester Alves](https://img.shields.io/badge/GitHub-EsterAlvex_(Ester_Alves)-%23181717.svg?logo=github&logoColor=white)](https://github.com/EsterAlvex)
+
+[![LinkedIn Isabela_Marques](https://img.shields.io/badge/LinkedIn-Isabela_Marques-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://br.linkedin.com/in/isabela-marques-725a92332)
+[![GitHub Isabela Marques](https://img.shields.io/badge/GitHub-isabelamarquess_(Isabela_Marques)-%23181717.svg?logo=github&logoColor=white)](https://github.com/isabelamarquess)
+
+[![LinkedIn Jhiovana Silva](https://img.shields.io/badge/LinkedIn-Jhiovana_Silva-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](www.linkedin.com/in/jhiovanasilva)
+[![GitHub Jhiovana Silva](https://img.shields.io/badge/GitHub-jhsribeiro_(Jhiovana_Silva)-%23181717.svg?logo=github&logoColor=white)](https://github.com/jhsribeiro)
+
+[![LinkedIn Thalita Soares](https://img.shields.io/badge/LinkedIn-Thalita_Soares-%230077B5.svg?labelColor=%23FFFFFF&logo=linkedin)](https://www.linkedin.com/in/thalita-soares-9982b82ba/)
+[![GitHub Thalita Soaress](https://img.shields.io/badge/GitHub-tatav3ras_(Thalita_Soares)-%23181717.svg?logo=github&logoColor=white)](https://github.com/tatav3ras)
+
+
 
 
 ---
