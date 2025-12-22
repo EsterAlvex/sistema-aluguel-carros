@@ -129,8 +129,7 @@ sistema-aluguel-carros/
 ---
 
 ## Diagrama de Banco de Dados
-
-<img width="1059" height="477" alt="image" src="https://github.com/user-attachments/assets/77d3f2de-1e72-4a2e-9849-36103f917df0" />
+<img width="1887" height="842" alt="image" src="https://github.com/user-attachments/assets/febafd1f-2676-47b4-b943-5a86de5d4dac" />
 
 ### Principais Entidades e Relacionamentos
 * **Usuário**: Entidade central diferenciada pelo campo `tipo` (Cliente ou Funcionário). Possui campos críticos para identificação e conformidade legal, como `id` e `cnh`.
